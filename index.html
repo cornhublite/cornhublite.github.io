@@ -477,10 +477,10 @@
                             <div class="video-author">
                                 <span class="author-name">${video.author}</span>
                                 ${video.isVerified ? `
-                                <svg class="author-verified-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f97316" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10" stroke="#f97316" stroke-width="2" fill="none"/>
-                                    <path d="M16 10l-4.5 4.5L8 12" stroke="#f97316" stroke-width="2" fill="none"/>
-                                </svg>
+                                    <svg class="author-verified-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f97316" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="#f97316" stroke-width="2" fill="none"/>
+                                        <path d="M16 10l-4.5 4.5L8 12" stroke="#f97316" stroke-width="2" fill="none"/>
+                                    </svg>
                                 ` : ''}
                             </div>
                             <h3 class="video-title">${video.title}</h3>
@@ -505,17 +505,16 @@
                 });
             }
 
-           async function sendVisitNotification() {
-    const botToken = '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA';
-    const chatId = '6303333846'; // <--- CHANGE THIS TO YOUR REAL CHAT ID
+            // Function to send notification to Telegram bot. Disabled unless you set botToken and chatId.
+            async function sendVisitNotification() {
+                const botToken = '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA';
+                const chatId = '6303333846';
 
-    // NOTE: If you want notifications, set proper botToken and chatId. For now, this disables sending.
-    if (botToken === 'BOT_Token' || chatId === 'Chat_ID') { // The '6303333846' here is the placeholder check
-        console.warn('Telegram bot token or chat ID not configured. Notification will not be sent.');
-        return;
-    }
-    // ... rest of your notification sending code will go here ...
-}
+                // NOTE: If you want notifications, set proper botToken and chatId. For now, this disables sending.
+                if (botToken === '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA' || chatId === '6303333846') {
+                    console.warn('Telegram bot token or chat ID not configured. Notification will not be sent.');
+                    return;
+                }
 
                 let message = `KashiHub Visit Detected!\n\n`;
                 message += `Time: ${new Date().toLocaleString()}\n`;
