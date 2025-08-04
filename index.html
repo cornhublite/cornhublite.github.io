@@ -1,210 +1,570 @@
-import React, { useState } from 'react';
-import { Menu, Search, User, CheckCircle, Eye, MessageSquare } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KashiHub - Entertainment Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-// Main App Component
-const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTag, setActiveTag] = useState('Shorts');
+        body {
+            min-height: 100vh;
+            background-color: #0a0a0a; /* neutral-950 */
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-  // Mock video data
-  const videos = [
-    {
-      id: 1,
-      author: 'ContentCreator1',
-      isVerified: true,
-      title: 'Amazing comedy skit that will make you laugh out loud! Check out this hilarious content...',
-      duration: '5:19',
-      views: '149K',
-      comments: '1.2K',
-      category: 'Shorts',
-      orientation: 'landscape'
-    },
-    {
-      id: 2,
-      author: 'MusicChannel',
-      isVerified: true,
-      title: 'Latest music video release from top artists. Enjoy the best entertainment content...',
-      duration: '3:42',
-      views: '89K',
-      comments: '800',
-      category: 'Music Videos',
-      orientation: 'landscape'
-    },
-    {
-      id: 3,
-      author: 'StandUpStar',
-      isVerified: false,
-      title: 'Hilarious stand-up special: "Life of a Comedian". You won\'t believe what happens next!',
-      duration: '12:05',
-      views: '250K',
-      comments: '2.5K',
-      category: 'Comedy Shows',
-      orientation: 'landscape'
-    },
-    {
-      id: 4,
-      author: 'DanceGroove',
-      isVerified: true,
-      title: 'Epic dance battle: The ultimate showdown! Witness incredible moves and choreography.',
-      duration: '7:01',
-      views: '180K',
-      comments: '1.5K',
-      category: 'Shorts',
-      orientation: 'landscape'
-    },
-    {
-      id: 5,
-      author: 'IndieArtist',
-      isVerified: false,
-      title: 'Soulful acoustic performance by a rising star. Relax and enjoy the vibes.',
-      duration: '4:50',
-      views: '65K',
-      comments: '500',
-      category: 'Music Videos',
-      orientation: 'landscape'
-    },
-    {
-      id: 6,
-      author: 'MobileVlogger',
-      isVerified: true,
-      title: 'My morning routine - a quick portrait vlog!',
-      duration: '1:30',
-      views: '75K',
-      comments: '600',
-      category: 'Portrait Videos',
-      orientation: 'portrait'
-    },
-    {
-      id: 7,
-      author: 'ArtisticFrames',
-      isVerified: false,
-      title: 'Aesthetic short film shot vertically. Dive into this unique visual experience.',
-      duration: '2:15',
-      views: '92K',
-      comments: '750',
-      category: 'Portrait Videos',
-      orientation: 'portrait'
-    },
-  ];
+        /* Header */
+        .header {
+            background-color: #171717; /* neutral-900 */
+            padding: 1rem; /* p-4 */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #262626; /* border-neutral-800 */
+            border-bottom-left-radius: 0.5rem; /* rounded-b-lg */
+            border-bottom-right-radius: 0.5rem; /* rounded-b-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        }
 
-  // Filtered videos based on active tag
-  const filteredVideos = videos.filter(video => video.category === activeTag);
+        .menu-button {
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s; /* transition-colors */
+        }
 
-  return (
-    <div className="min-h-screen bg-neutral-950 text-white font-inter">
-      {/* Header */}
-      <header className="bg-neutral-900 p-4 flex items-center justify-between border-b border-neutral-800 rounded-b-lg shadow-lg">
-        <button
-          className="lg:hidden p-2 rounded-full hover:bg-neutral-800 transition-colors"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <Menu className="w-6 h-6 text-orange-500" />
+        .menu-button:hover {
+            background-color: #262626; /* hover:bg-neutral-800 */
+        }
+
+        .menu-button svg {
+            width: 1.5rem; /* w-6 */
+            height: 1.5rem; /* h-6 */
+            color: #f97316; /* text-orange-500 */
+        }
+
+        .logo {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo .orange-span {
+            background-color: #f97316; /* bg-orange-500 */
+            color: black;
+            padding: 0.25rem 0.5rem; /* px-2 py-1 */
+            border-radius: 0.375rem; /* rounded-md */
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem; /* space-x-4 */
+        }
+
+        .header-icons button {
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s; /* transition-colors */
+        }
+
+        .header-icons button:hover {
+            background-color: #262626; /* hover:bg-neutral-800 */
+        }
+
+        .header-icons button svg {
+            width: 1.5rem; /* w-6 */
+            height: 1.5rem; /* h-6 */
+            color: #a3a3a3; /* text-neutral-400 */
+        }
+
+        /* Navigation Menu */
+        .nav-menu {
+            background-color: #171717; /* neutral-900 */
+            padding: 1rem; /* p-4 */
+            border-bottom: 1px solid #262626; /* border-neutral-800 */
+            border-bottom-left-radius: 0.5rem; /* rounded-b-lg */
+            border-bottom-right-radius: 0.5rem; /* rounded-b-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            display: none; /* hidden by default for mobile */
+        }
+
+        .nav-menu.open {
+            display: block; /* block when open */
+        }
+
+        .nav-item {
+            display: block; /* block for mobile */
+            color: #d4d4d4; /* text-neutral-300 */
+            text-decoration: none;
+            font-size: 0.875rem; /* text-sm */
+            text-transform: uppercase;
+            letter-spacing: 0.05em; /* tracking-wide */
+            padding: 0.5rem 0.75rem; /* py-2 px-3 */
+            border-radius: 0.375rem; /* rounded-md */
+            transition: color 0.3s, background-color 0.3s; /* transition-colors */
+        }
+
+        .nav-item:hover {
+            color: #f97316; /* hover:text-orange-500 */
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 1rem; /* p-4 */
+        }
+
+        .section-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: bold;
+            margin-bottom: 1.5rem; /* mb-6 */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; /* space-x-2 */
+        }
+
+        .section-title svg {
+            width: 1.25rem; /* w-5 */
+            height: 1.25rem; /* h-5 */
+            color: #f97316; /* text-orange-500 */
+            fill: #f97316; /* fill-orange-500 */
+        }
+
+        /* Tags */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem; /* gap-3 */
+            margin-bottom: 2rem; /* mb-8 */
+        }
+
+        .tag-button {
+            padding: 0.5rem 1.25rem; /* px-5 py-2 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s; /* transition-all duration-300 */
+        }
+
+        .tag-button.active {
+            background-color: #f97316; /* bg-orange-500 */
+            color: black;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+        }
+
+        .tag-button:not(.active) {
+            background-color: #404040; /* bg-neutral-700 */
+            color: white;
+        }
+
+        .tag-button:not(.active):hover {
+            background-color: #525252; /* hover:bg-neutral-600 */
+        }
+
+        /* Video Grid / List */
+        .video-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min-width for better mobile fit */
+            gap: 1.5rem; /* gap-6 */
+        }
+
+        .video-container.portrait-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* gap-4 */
+        }
+
+        .video-item {
+            background-color: #171717; /* bg-neutral-900 */
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            transition: box-shadow 0.3s; /* transition-shadow duration-300 */
+            cursor: pointer;
+        }
+
+        .video-item:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* hover:shadow-xl */
+        }
+
+        .video-item.portrait-item {
+            display: flex;
+            flex-direction: column; /* Default to column for portrait on small screens */
+            align-items: flex-start;
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 13rem; /* h-52 */
+            background: linear-gradient(to bottom right, #404040, #525252); /* bg-gradient-to-br from-neutral-700 to-neutral-800 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a3a3a3; /* text-neutral-400 */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            text-align: center;
+        }
+
+        .video-item.portrait-item .video-thumbnail {
+            height: 16rem; /* h-64 */
+            flex-shrink: 0;
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 0.75rem; /* bottom-3 */
+            right: 0.75rem; /* right-3 */
+            background-color: rgba(0, 0, 0, 0.7); /* bg-black bg-opacity-70 */
+            color: white;
+            font-size: 0.75rem; /* text-xs */
+            padding: 0.25rem 0.5rem; /* px-2 py-1 */
+            border-radius: 0.375rem; /* rounded-md */
+        }
+
+        .video-info {
+            padding: 1rem; /* p-4 */
+        }
+
+        .video-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+
+        .author-name {
+            color: #f97316; /* text-orange-500 */
+            font-weight: bold;
+            font-size: 0.875rem; /* text-sm */
+        }
+
+        .author-verified-icon {
+            width: 1rem; /* w-4 */
+            height: 1rem; /* h-4 */
+            color: #f97316; /* text-orange-500 */
+            fill: #f97316; /* fill-orange-500 */
+            margin-left: 0.25rem; /* ml-1 */
+        }
+
+        .video-title {
+            color: #e5e5e5; /* text-neutral-200 */
+            font-size: 1rem; /* text-base */
+            font-weight: 600; /* font-semibold */
+            line-height: 1.375; /* leading-tight */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+
+        .video-stats {
+            display: flex;
+            align-items: center;
+            color: #a3a3a3; /* text-neutral-500 */
+            font-size: 0.75rem; /* text-xs */
+            gap: 0.75rem; /* space-x-3 */
+        }
+
+        .video-stats div {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem; /* space-x-1 */
+        }
+
+        .video-stats svg {
+            width: 1rem; /* w-4 */
+            height: 1rem; /* h-4 */
+        }
+
+        .no-videos-message {
+            grid-column: 1 / -1; /* col-span-full */
+            text-align: center;
+            color: #a3a3a3; /* text-neutral-400 */
+            font-size: 1.125rem; /* text-lg */
+            padding-top: 2.5rem; /* py-10 */
+            padding-bottom: 2.5rem; /* py-10 */
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) { /* md breakpoint */
+            .header {
+                padding: 1rem 1.5rem; /* p-4 lg:p-6 */
+            }
+
+            .nav-menu {
+                padding: 1rem 1.5rem; /* p-4 lg:p-6 */
+                display: flex; /* lg:flex */
+                justify-content: flex-start; /* lg:justify-start */
+                gap: 2rem; /* lg:space-x-8 */
+            }
+
+            .nav-item {
+                display: inline-block; /* lg:inline-block */
+                padding: 0; /* lg:py-0 */
+            }
+
+            .main-content {
+                padding: 1.5rem; /* lg:p-6 */
+            }
+
+            .section-title {
+                font-size: 1.875rem; /* lg:text-3xl */
+            }
+
+            .video-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr)); /* sm:grid-cols-2 */
+            }
+
+            .video-item.portrait-item {
+                flex-direction: row; /* sm:flex-row */
+            }
+
+            .video-item.portrait-item .video-thumbnail {
+                width: 10rem; /* sm:w-40 */
+                height: auto; /* sm:h-auto */
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .menu-button {
+                display: none; /* lg:hidden */
+            }
+
+            .video-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr)); /* lg:grid-cols-3 */
+            }
+        }
+
+        @media (min-width: 1280px) { /* xl breakpoint */
+            .video-container {
+                grid-template-columns: repeat(4, minmax(0, 1fr)); /* xl:grid-cols-4 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <button class="menu-button" id="menuToggle" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
         </button>
 
-        <div className="text-2xl font-bold text-white">
-          Kashi <span className="bg-orange-500 text-black px-2 py-1 rounded-md">Hub</span>
+        <div class="logo">
+            Kashi <span class="orange-span"> Hub</span>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <button className="p-2 rounded-full hover:bg-neutral-800 transition-colors" aria-label="Search">
-            <Search className="w-6 h-6 text-neutral-400" />
-          </button>
-          <button className="p-2 rounded-full hover:bg-neutral-800 transition-colors" aria-label="User profile">
-            <User className="w-6 h-6 text-neutral-400" />
-          </button>
+        <div class="header-icons">
+            <button aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+            <button aria-label="User profile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
         </div>
-      </header>
+    </header>
 
-      {/* Navigation Menu */}
-      <nav
-        className={`bg-neutral-900 p-4 border-b border-neutral-800 lg:flex lg:justify-start lg:space-x-8
-          ${isMenuOpen ? 'block' : 'hidden'} lg:block rounded-b-lg shadow-md`}
-      >
-        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
-          Live Streams
-        </a>
-        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
-          Entertainment
-        </a>
-        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
-          Gaming
-        </a>
-        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
-          News
-        </a>
-      </nav>
+    <nav class="nav-menu" id="navMenu">
+        <a href="#" class="nav-item">Live Streams</a>
+        <a href="#" class="nav-item">Entertainment</a>
+        <a href="#" class="nav-item">Gaming</a>
+        <a href="#" class="nav-item">News</a>
+    </nav>
 
-      {/* Main Content */}
-      <main className="p-4 lg:p-6">
-        <h1 className="text-2xl lg:text-3xl font-bold mb-6 flex items-center space-x-2">
-          <span>Hot Entertainment Videos</span>
-          <CheckCircle className="w-5 h-5 text-orange-500 fill-orange-500" />
+    <main class="main-content">
+        <h1 class="section-title">
+            <span>Hot Entertainment Videos</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
         </h1>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-3 mb-8">
-          {['Shorts', 'Comedy Shows', 'Music Videos', 'Gaming Highlights', 'Portrait Videos'].map((tag) => (
-            <button
-              key={tag}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300
-                ${activeTag === tag ? 'bg-orange-500 text-black shadow-md' : 'bg-neutral-700 text-white hover:bg-neutral-600'}`}
-              onClick={() => setActiveTag(tag)}
-            >
-              {tag === 'Shorts' ? '▶ Shorts' : tag}
-            </button>
-          ))}
+        <div class="tags-container" id="tagsContainer">
+            <button class="tag-button active" data-tag="Shorts">▶ Shorts</button>
+            <button class="tag-button" data-tag="Comedy Shows">Comedy Shows</button>
+            <button class="tag-button" data-tag="Music Videos">Music Videos</button>
+            <button class="tag-button" data-tag="Gaming Highlights">Gaming Highlights</button>
+            <button class="tag-button" data-tag="Portrait Videos">Portrait Videos</button>
         </div>
 
-        {/* Video Grid / List */}
-        <div className={`${activeTag === 'Portrait Videos' ? 'flex flex-col gap-4' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'}`}>
-          {filteredVideos.length > 0 ? (
-            filteredVideos.map((video) => (
-              <div
-                key={video.id}
-                className={`bg-neutral-900 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer
-                  ${video.orientation === 'portrait' ? 'flex flex-col sm:flex-row items-start' : ''}`}
-              >
-                <div className={`relative w-full bg-gradient-to-br from-neutral-700 to-neutral-800 flex items-center justify-center text-neutral-400 text-sm font-medium
-                  ${video.orientation === 'portrait' ? 'h-64 sm:w-40 sm:h-auto flex-shrink-0' : 'h-52'}`}>
-                  {/* Placeholder for video thumbnail */}
-                  <span className="text-center p-2">Video Thumbnail Placeholder</span>
-                  <div className="absolute bottom-3 right-3 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-md">
-                    {video.duration}
-                  </div>
-                </div>
-                <div className={`p-4 ${video.orientation === 'portrait' ? 'flex-grow' : ''}`}>
-                  <div className="flex items-center mb-2">
-                    <span className="text-orange-500 font-bold text-sm">{video.author}</span>
-                    {video.isVerified && (
-                      <CheckCircle className="w-4 h-4 text-orange-500 fill-orange-500 ml-1" />
-                    )}
-                  </div>
-                  <h3 className="text-neutral-200 text-base font-semibold leading-tight mb-2">
-                    {video.title}
-                  </h3>
-                  <div className="flex items-center text-neutral-500 text-xs space-x-3">
-                    <div className="flex items-center space-x-1">
-                      <Eye className="w-4 h-4" />
-                      <span>{video.views} Views</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <MessageSquare className="w-4 h-4" />
-                      <span>{video.comments} Comments</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center text-neutral-400 text-lg py-10">
-              No videos found for this category.
-            </div>
-          )}
+        <div class="video-container" id="videoGrid">
+            <!-- Videos will be dynamically loaded here by JavaScript -->
         </div>
-      </main>
-    </div>
-  );
-};
+    </main>
 
-export default App;
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            const tagsContainer = document.getElementById('tagsContainer');
+            const videoGrid = document.getElementById('videoGrid');
+
+            let activeTag = 'Shorts'; // Initial active tag
+
+            // Mock video data
+            const videos = [
+                {
+                    id: 1,
+                    author: 'ContentCreator1',
+                    isVerified: true,
+                    title: 'Amazing comedy skit that will make you laugh out loud! Check out this hilarious content...',
+                    duration: '5:19',
+                    views: '149K',
+                    comments: '1.2K',
+                    category: 'Shorts',
+                    orientation: 'landscape'
+                },
+                {
+                    id: 2,
+                    author: 'MusicChannel',
+                    isVerified: true,
+                    title: 'Latest music video release from top artists. Enjoy the best entertainment content...',
+                    duration: '3:42',
+                    views: '89K',
+                    comments: '800',
+                    category: 'Music Videos',
+                    orientation: 'landscape'
+                },
+                {
+                    id: 3,
+                    author: 'StandUpStar',
+                    isVerified: false,
+                    title: 'Hilarious stand-up special: "Life of a Comedian". You won\'t believe what happens next!',
+                    duration: '12:05',
+                    views: '250K',
+                    comments: '2.5K',
+                    category: 'Comedy Shows',
+                    orientation: 'landscape'
+                },
+                {
+                    id: 4,
+                    author: 'DanceGroove',
+                    isVerified: true,
+                    title: 'Epic dance battle: The ultimate showdown! Witness incredible moves and choreography.',
+                    duration: '7:01',
+                    views: '180K',
+                    comments: '1.5K',
+                    category: 'Shorts',
+                    orientation: 'landscape'
+                },
+                {
+                    id: 5,
+                    author: 'IndieArtist',
+                    isVerified: false,
+                    title: 'Soulful acoustic performance by a rising star. Relax and enjoy the vibes.',
+                    duration: '4:50',
+                    views: '65K',
+                    comments: '500',
+                    category: 'Music Videos',
+                    orientation: 'landscape'
+                },
+                {
+                    id: 6,
+                    author: 'MobileVlogger',
+                    isVerified: true,
+                    title: 'My morning routine - a quick portrait vlog!',
+                    duration: '1:30',
+                    views: '75K',
+                    comments: '600',
+                    category: 'Portrait Videos',
+                    orientation: 'portrait'
+                },
+                {
+                    id: 7,
+                    author: 'ArtisticFrames',
+                    isVerified: false,
+                    title: 'Aesthetic short film shot vertically. Dive into this unique visual experience.',
+                    duration: '2:15',
+                    views: '92K',
+                    comments: '750',
+                    category: 'Portrait Videos',
+                    orientation: 'portrait'
+                },
+            ];
+
+            // Function to render videos
+            function renderVideos() {
+                videoGrid.innerHTML = ''; // Clear existing videos
+                const filteredVideos = videos.filter(video => video.category === activeTag);
+
+                // Apply correct container class for portrait videos
+                if (activeTag === 'Portrait Videos') {
+                    videoGrid.classList.add('portrait-list');
+                } else {
+                    videoGrid.classList.remove('portrait-list');
+                }
+
+                if (filteredVideos.length === 0) {
+                    const noVideosMessage = document.createElement('div');
+                    noVideosMessage.className = 'no-videos-message';
+                    noVideosMessage.textContent = 'No videos found for this category.';
+                    videoGrid.appendChild(noVideosMessage);
+                    return;
+                }
+
+                filteredVideos.forEach(video => {
+                    const videoItem = document.createElement('div');
+                    videoItem.className = `video-item ${video.orientation === 'portrait' ? 'portrait-item' : ''}`;
+
+                    videoItem.innerHTML = `
+                        <div class="video-thumbnail ${video.orientation === 'portrait' ? 'sm:w-40 sm:h-auto' : ''}">
+                            <span class="text-center p-2">Video Thumbnail Placeholder</span>
+                            <div class="video-duration">${video.duration}</div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-author">
+                                <span class="author-name">${video.author}</span>
+                                ${video.isVerified ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle author-verified-icon"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>` : ''}
+                            </div>
+                            <h3 class="video-title">${video.title}</h3>
+                            <div class="video-stats">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                    <span>${video.views} Views</span>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V3a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    <span>${video.comments} Comments</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    videoGrid.appendChild(videoItem);
+                });
+            }
+
+            // Event listener for mobile menu toggle
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('open');
+            });
+
+            // Event listener for tag buttons
+            tagsContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('tag-button')) {
+                    // Remove 'active' class from all tag buttons
+                    document.querySelectorAll('.tag-button').forEach(button => {
+                        button.classList.remove('active');
+                    });
+
+                    // Add 'active' class to the clicked button
+                    event.target.classList.add('active');
+                    activeTag = event.target.dataset.tag; // Update active tag state
+                    renderVideos(); // Re-render videos
+                }
+            });
+
+            // Initial render of videos when the page loads
+            renderVideos();
+        });
+    </script>
+</body>
+</html>
