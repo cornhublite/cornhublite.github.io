@@ -212,14 +212,19 @@
             position: relative;
             width: 100%;
             height: 13rem; /* h-52 */
-            background: linear-gradient(to bottom right, #404040, #525252); /* bg-gradient-to-br from-neutral-700 to-neutral-800 */
-            display: flex;
+            /* Removed background gradient, now image will cover */
+            display: flex; /* Keep flex for duration positioning */
             align-items: center;
             justify-content: center;
-            color: #a3a3a3; /* text-neutral-400 */
-            font-size: 0.875rem; /* text-sm */
-            font-weight: 500; /* font-medium */
-            text-align: center;
+            overflow: hidden; /* Ensure image doesn't overflow rounded corners */
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the area */
+            border-top-left-radius: 0.5rem; /* rounded-t-lg */
+            border-top-right-radius: 0.5rem; /* rounded-t-lg */
         }
 
         .video-item.portrait-item .video-thumbnail {
@@ -517,7 +522,7 @@
 
                     videoItem.innerHTML = `
                         <div class="video-thumbnail ${video.orientation === 'portrait' ? 'sm:w-40 sm:h-auto' : ''}">
-                            <span class="text-center p-2">Video Thumbnail Placeholder</span>
+                            <img src="${video.orientation === 'portrait' ? '1cornxd.png' : 'cornxd.png'}" alt="Video Thumbnail" class="w-full h-full object-cover rounded-t-lg">
                             <div class="video-duration">${video.duration}</div>
                         </div>
                         <div class="video-info">
