@@ -1,335 +1,210 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KashiHub - Entertainment Platform</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+import React, { useState } from 'react';
+import { Menu, Search, User, CheckCircle, Eye, MessageSquare } from 'lucide-react';
 
-        body {
-            background-color: #0d0d0d;
-            color: white;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;
-        }
+// Main App Component
+const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeTag, setActiveTag] = useState('Shorts');
 
-        .header {
-            background-color: #1a1a1a;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #333;
-        }
+  // Mock video data
+  const videos = [
+    {
+      id: 1,
+      author: 'ContentCreator1',
+      isVerified: true,
+      title: 'Amazing comedy skit that will make you laugh out loud! Check out this hilarious content...',
+      duration: '5:19',
+      views: '149K',
+      comments: '1.2K',
+      category: 'Shorts',
+      orientation: 'landscape'
+    },
+    {
+      id: 2,
+      author: 'MusicChannel',
+      isVerified: true,
+      title: 'Latest music video release from top artists. Enjoy the best entertainment content...',
+      duration: '3:42',
+      views: '89K',
+      comments: '800',
+      category: 'Music Videos',
+      orientation: 'landscape'
+    },
+    {
+      id: 3,
+      author: 'StandUpStar',
+      isVerified: false,
+      title: 'Hilarious stand-up special: "Life of a Comedian". You won\'t believe what happens next!',
+      duration: '12:05',
+      views: '250K',
+      comments: '2.5K',
+      category: 'Comedy Shows',
+      orientation: 'landscape'
+    },
+    {
+      id: 4,
+      author: 'DanceGroove',
+      isVerified: true,
+      title: 'Epic dance battle: The ultimate showdown! Witness incredible moves and choreography.',
+      duration: '7:01',
+      views: '180K',
+      comments: '1.5K',
+      category: 'Shorts',
+      orientation: 'landscape'
+    },
+    {
+      id: 5,
+      author: 'IndieArtist',
+      isVerified: false,
+      title: 'Soulful acoustic performance by a rising star. Relax and enjoy the vibes.',
+      duration: '4:50',
+      views: '65K',
+      comments: '500',
+      category: 'Music Videos',
+      orientation: 'landscape'
+    },
+    {
+      id: 6,
+      author: 'MobileVlogger',
+      isVerified: true,
+      title: 'My morning routine - a quick portrait vlog!',
+      duration: '1:30',
+      views: '75K',
+      comments: '600',
+      category: 'Portrait Videos',
+      orientation: 'portrait'
+    },
+    {
+      id: 7,
+      author: 'ArtisticFrames',
+      isVerified: false,
+      title: 'Aesthetic short film shot vertically. Dive into this unique visual experience.',
+      duration: '2:15',
+      views: '92K',
+      comments: '750',
+      category: 'Portrait Videos',
+      orientation: 'portrait'
+    },
+  ];
 
-        .menu-icon {
-            width: 24px;
-            height: 18px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            cursor: pointer;
-        }
+  // Filtered videos based on active tag
+  const filteredVideos = videos.filter(video => video.category === activeTag);
 
-        .menu-line {
-            width: 100%;
-            height: 2px;
-            background-color: #ff9000;
-        }
+  return (
+    <div className="min-h-screen bg-neutral-950 text-white font-inter">
+      {/* Header */}
+      <header className="bg-neutral-900 p-4 flex items-center justify-between border-b border-neutral-800 rounded-b-lg shadow-lg">
+        <button
+          className="lg:hidden p-2 rounded-full hover:bg-neutral-800 transition-colors"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <Menu className="w-6 h-6 text-orange-500" />
+        </button>
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-        }
-
-        .logo .orange {
-            background-color: #ff9000;
-            color: black;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .icon {
-            width: 24px;
-            height: 24px;
-            background-color: #666;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .nav-menu {
-            background-color: #1a1a1a;
-            padding: 16px;
-            display: flex;
-            gap: 32px;
-            border-bottom: 1px solid #333;
-        }
-
-        .nav-item {
-            color: #ccc;
-            text-decoration: none;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-item:hover {
-            color: #ff9000;
-        }
-
-        .content {
-            padding: 20px 16px;
-        }
-
-        .section-title {
-            font-size: 20px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .verified-icon {
-            width: 16px;
-            height: 16px;
-            background-color: #ff9000;
-            border-radius: 50%;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: black;
-            font-weight: bold;
-        }
-
-        .tags {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background-color: #333;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s;
-        }
-
-        .tag.active {
-            background-color: #ff9000;
-            color: black;
-        }
-
-        .tag:hover {
-            background-color: #555;
-        }
-
-        .video-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .video-item {
-            background-color: #1a1a1a;
-            margin-bottom: 1px;
-            cursor: pointer;
-        }
-
-        .video-thumbnail {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(45deg, #333, #555);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .video-duration {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 12px;
-        }
-
-        .video-info {
-            padding: 12px;
-        }
-
-        .video-author {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-
-        .author-name {
-            color: #ff9000;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .author-verified {
-            width: 14px;
-            height: 14px;
-            background-color: #ff9000;
-            border-radius: 50%;
-            font-size: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: black;
-            font-weight: bold;
-        }
-
-        .video-title {
-            color: #ccc;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .video-stats {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 8px;
-            color: #666;
-            font-size: 12px;
-        }
-
-        .stats-icon {
-            width: 12px;
-            height: 12px;
-            background-color: #666;
-            border-radius: 50%;
-        }
-
-        @media (min-width: 768px) {
-            .header {
-                padding: 12px 24px;
-            }
-            
-            .nav-menu {
-                padding: 16px 24px;
-            }
-            
-            .content {
-                padding: 20px 24px;
-            }
-            
-            .video-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 16px;
-            }
-            
-            .video-item {
-                margin-bottom: 0;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <div class="menu-icon">
-            <div class="menu-line"></div>
-            <div class="menu-line"></div>
-            <div class="menu-line"></div>
+        <div className="text-2xl font-bold text-white">
+          Kashi <span className="bg-orange-500 text-black px-2 py-1 rounded-md">Hub</span>
         </div>
-        
-        <div class="logo">
-            Kashi <span class="orange"> Hub</span>
-        </div>
-        
-        <div class="header-icons">
-            <div class="icon"></div>
-            <div class="icon"></div>
-        </div>
-    </header>
 
-    <nav class="nav-menu">
-        <a href="#" class="nav-item">Live Streams</a>
-        <a href="#" class="nav-item">Entertainment</a>
-    </nav>
+        <div className="flex items-center space-x-4">
+          <button className="p-2 rounded-full hover:bg-neutral-800 transition-colors" aria-label="Search">
+            <Search className="w-6 h-6 text-neutral-400" />
+          </button>
+          <button className="p-2 rounded-full hover:bg-neutral-800 transition-colors" aria-label="User profile">
+            <User className="w-6 h-6 text-neutral-400" />
+          </button>
+        </div>
+      </header>
 
-    <main class="content">
-        <h1 class="section-title">
-            Hot Entertainment Videos
-            <span class="verified-icon">✓</span>
+      {/* Navigation Menu */}
+      <nav
+        className={`bg-neutral-900 p-4 border-b border-neutral-800 lg:flex lg:justify-start lg:space-x-8
+          ${isMenuOpen ? 'block' : 'hidden'} lg:block rounded-b-lg shadow-md`}
+      >
+        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
+          Live Streams
+        </a>
+        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
+          Entertainment
+        </a>
+        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
+          Gaming
+        </a>
+        <a href="#" className="block lg:inline-block text-neutral-300 hover:text-orange-500 text-sm uppercase tracking-wide py-2 lg:py-0 px-3 rounded-md transition-colors">
+          News
+        </a>
+      </nav>
+
+      {/* Main Content */}
+      <main className="p-4 lg:p-6">
+        <h1 className="text-2xl lg:text-3xl font-bold mb-6 flex items-center space-x-2">
+          <span>Hot Entertainment Videos</span>
+          <CheckCircle className="w-5 h-5 text-orange-500 fill-orange-500" />
         </h1>
 
-        <div class="tags">
-            <button class="tag active">▶ Shorts</button>
-            <button class="tag">Comedy Shows</button>
-            <button class="tag">Music Videos</button>
+        {/* Tags */}
+        <div className="flex flex-wrap gap-3 mb-8">
+          {['Shorts', 'Comedy Shows', 'Music Videos', 'Gaming Highlights', 'Portrait Videos'].map((tag) => (
+            <button
+              key={tag}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300
+                ${activeTag === tag ? 'bg-orange-500 text-black shadow-md' : 'bg-neutral-700 text-white hover:bg-neutral-600'}`}
+              onClick={() => setActiveTag(tag)}
+            >
+              {tag === 'Shorts' ? '▶ Shorts' : tag}
+            </button>
+          ))}
         </div>
 
-        <div class="video-grid">
-            <div class="video-item">
-                <div class="video-thumbnail">
-                    <div>Entertainment Content Thumbnail</div>
-                    <div class="video-duration">5:19</div>
+        {/* Video Grid / List */}
+        <div className={`${activeTag === 'Portrait Videos' ? 'flex flex-col gap-4' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'}`}>
+          {filteredVideos.length > 0 ? (
+            filteredVideos.map((video) => (
+              <div
+                key={video.id}
+                className={`bg-neutral-900 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer
+                  ${video.orientation === 'portrait' ? 'flex flex-col sm:flex-row items-start' : ''}`}
+              >
+                <div className={`relative w-full bg-gradient-to-br from-neutral-700 to-neutral-800 flex items-center justify-center text-neutral-400 text-sm font-medium
+                  ${video.orientation === 'portrait' ? 'h-64 sm:w-40 sm:h-auto flex-shrink-0' : 'h-52'}`}>
+                  {/* Placeholder for video thumbnail */}
+                  <span className="text-center p-2">Video Thumbnail Placeholder</span>
+                  <div className="absolute bottom-3 right-3 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-md">
+                    {video.duration}
+                  </div>
                 </div>
-                <div class="video-info">
-                    <div class="video-author">
-                        <span class="author-name">ContentCreator1</span>
-                        <span class="author-verified">✓</span>
-                        <div class="video-stats">
-                            <span class="stats-icon"></span>
-                            <span>149K</span>
-                        </div>
+                <div className={`p-4 ${video.orientation === 'portrait' ? 'flex-grow' : ''}`}>
+                  <div className="flex items-center mb-2">
+                    <span className="text-orange-500 font-bold text-sm">{video.author}</span>
+                    {video.isVerified && (
+                      <CheckCircle className="w-4 h-4 text-orange-500 fill-orange-500 ml-1" />
+                    )}
+                  </div>
+                  <h3 className="text-neutral-200 text-base font-semibold leading-tight mb-2">
+                    {video.title}
+                  </h3>
+                  <div className="flex items-center text-neutral-500 text-xs space-x-3">
+                    <div className="flex items-center space-x-1">
+                      <Eye className="w-4 h-4" />
+                      <span>{video.views} Views</span>
                     </div>
-                    <div class="video-title">
-                        Amazing comedy skit that will make you laugh out loud! Check out this hilarious content...
+                    <div className="flex items-center space-x-1">
+                      <MessageSquare className="w-4 h-4" />
+                      <span>{video.comments} Comments</span>
                     </div>
+                  </div>
                 </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center text-neutral-400 text-lg py-10">
+              No videos found for this category.
             </div>
-
-            <div class="video-item">
-                <div class="video-thumbnail">
-                    <div>Music Video Thumbnail</div>
-                    <div class="video-duration">3:42</div>
-                </div>
-                <div class="video-info">
-                    <div class="video-author">
-                        <span class="author-name">MusicChannel</span>
-                        <span class="author-verified">✓</span>
-                        <div class="video-stats">
-                            <span class="stats-icon"></span>
-                            <span>89K</span>
-                        </div>
-                    </div>
-                    <div class="video-title">
-                        Latest music video release from top artists. Enjoy the best entertainment content...
-                    </div>
-                </div>
-            </div>
+          )}
         </div>
-    </main>
-</body>
-</html>
+      </main>
+    </div>
+  );
+};
+
+export default App;
