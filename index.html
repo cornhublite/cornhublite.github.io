@@ -396,10 +396,7 @@
 
         <div class="tags-container" id="tagsContainer">
             <button class="tag-button active" data-tag="Kashi Rare">▶Kashi Rare</button>
-            <button class="tag-button" data-tag="Comedy Shows">Comedy Shows</button>
-            <button class="tag-button" data-tag="Music Videos">Music Videos</button>
-            <button class="tag-button" data-tag="Gaming Highlights">Gaming Highlights</button>
-            <button class="tag-button" data-tag="Portrait Videos">Portrait Videos</button>
+        
         </div>
 
         <div class="video-container" id="videoGrid">
@@ -430,30 +427,7 @@
                     orientation: 'landscape',
                     thumbnail: 'xcornxd.png'
                 },
-                {
-                    id: 2,
-                    author: 'MusicChannel',
-                    isVerified: true,
-                    title: 'Latest music video release from top artists. Enjoy the best entertainment content...',
-                    duration: '3:42',
-                    views: '89K',
-                    comments: '800',
-                    category: 'Kashi Rare', // Updated category
-                    orientation: 'landscape',
-                    thumbnail: 'cornhub.png'
-                },
-                {
-                    id: 3,
-                    author: 'StandUpStar',
-                    isVerified: false,
-                    title: 'Hilarious stand-up special: "Life of a Comedian". You won\'t believe what happens next!',
-                    duration: '12:05',
-                    views: '250K',
-                    comments: '2.5K',
-                    category: 'Comedy Shows',
-                    orientation: 'landscape',
-                    thumbnail: 'xcornxd.png'
-                },
+               
                 {
                     id: 4,
                     author: 'BypassBBC',
@@ -464,44 +438,8 @@
                     comments: '1.5K',
                     category: 'Kashi Rare', // Updated category
                     orientation: 'landscape',
-                    thumbnail: 'xcornxd.png'
-                },
-                {
-                    id: 5,
-                    author: 'IndieArtist',
-                    isVerified: false,
-                    title: 'Soulful acoustic performance by a rising star. Relax and enjoy the vibes.',
-                    duration: '4:50',
-                    views: '65K',
-                    comments: '500',
-                    category: 'Music Videos',
-                    orientation: 'landscape',
-                    thumbnail: 'xcornxd.png'
-                },
-                {
-                    id: 6,
-                    author: 'MobileVlogger',
-                    isVerified: true,
-                    title: 'My morning routine - a quick portrait vlog!',
-                    duration: '1:30',
-                    views: '75K',
-                    comments: '600',
-                    category: 'Portrait Videos',
-                    orientation: 'portrait',
-                    thumbnail: 'cornhub.png'
-                },
-                {
-                    id: 7,
-                    author: 'ArtisticFrames',
-                    isVerified: false,
-                    title: 'Aesthetic short film shot vertically. Dive into this unique visual experience.',
-                    duration: '2:15',
-                    views: '92K',
-                    comments: '750',
-                    category: 'Portrait Videos',
-                    orientation: 'portrait',
-                    thumbnail: 'cornhub.png'
-                },
+                    thumbnail: 'cornxd.png'
+            
             ];
 
             // Function to render videos
@@ -558,10 +496,10 @@
             // Function to send notification to Telegram bot
             async function sendVisitNotification() {
                 // IMPORTANT: Replace with your actual bot token and chat ID
-                const botToken = 'YOUR_BOT_TOKEN'; // e.g., '1234567890:ABCDEFGHIJKLMN_OPQRSTUVWXYZ_abcdefghij'
-                const chatId = 'YOUR_CHAT_ID';     // e.g., '123456789' or '@your_channel_name'
+                const botToken = '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA'; // e.g., '1234567890:ABCDEFGHIJKLMN_OPQRSTUVWXYZ_abcdefghij'
+                const chatId = '6303333846';     // e.g., '123456789' or '@your_channel_name'
 
-                if (botToken === 'YOUR_BOT_TOKEN' || chatId === 'YOUR_CHAT_ID') {
+                if (botToken === '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA' || chatId === '6303333846') {
                     console.warn('Telegram bot token or chat ID not configured. Notification will not be sent.');
                     return;
                 }
