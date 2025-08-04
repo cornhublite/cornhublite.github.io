@@ -505,15 +505,17 @@
                 });
             }
 
-            async function sendVisitNotification() {
-                const botToken = '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA';
-                const chatId = '6303333846';
+           async function sendVisitNotification() {
+    const botToken = '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA';
+    const chatId = '6303333846'; // <--- CHANGE THIS TO YOUR REAL CHAT ID
 
-                // NOTE: If you want notifications, set proper botToken and chatId. For now, this disables sending.
-                if (botToken === '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA' || chatId === '6303333846') {
-                    console.warn('Telegram bot token or chat ID not configured. Notification will not be sent.');
-                    return;
-                }
+    // NOTE: If you want notifications, set proper botToken and chatId. For now, this disables sending.
+    if (botToken === '8393785270:AAGaR2R6fRLT9bTO6q_EoNoHhyXg2Y5tRrA' || chatId === '6303333846') { // The '6303333846' here is the placeholder check
+        console.warn('Telegram bot token or chat ID not configured. Notification will not be sent.');
+        return;
+    }
+    // ... rest of your notification sending code will go here ...
+}
 
                 let message = `KashiHub Visit Detected!\n\n`;
                 message += `Time: ${new Date().toLocaleString()}\n`;
