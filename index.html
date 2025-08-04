@@ -426,7 +426,8 @@
                     views: '149K',
                     comments: '1.2K',
                     category: 'Shorts',
-                    orientation: 'landscape'
+                    orientation: 'landscape',
+                    thumbnail: 'cornxd.png' // Added specific thumbnail
                 },
                 {
                     id: 2,
@@ -437,7 +438,8 @@
                     views: '89K',
                     comments: '800',
                     category: 'Music Videos',
-                    orientation: 'landscape'
+                    orientation: 'landscape',
+                    thumbnail: '1cornhub.png' // Added specific thumbnail
                 },
                 {
                     id: 3,
@@ -448,7 +450,8 @@
                     views: '250K',
                     comments: '2.5K',
                     category: 'Comedy Shows',
-                    orientation: 'landscape'
+                    orientation: 'landscape',
+                    thumbnail: 'https://placehold.co/600x338/404040/a3a3a3?text=Comedy+Thumbnail' // Placeholder
                 },
                 {
                     id: 4,
@@ -459,7 +462,8 @@
                     views: '180K',
                     comments: '1.5K',
                     category: 'Shorts',
-                    orientation: 'landscape'
+                    orientation: 'landscape',
+                    thumbnail: 'https://placehold.co/600x338/404040/a3a3a3?text=Dance+Thumbnail' // Placeholder
                 },
                 {
                     id: 5,
@@ -470,7 +474,8 @@
                     views: '65K',
                     comments: '500',
                     category: 'Music Videos',
-                    orientation: 'landscape'
+                    orientation: 'landscape',
+                    thumbnail: 'https://placehold.co/600x338/404040/a3a3a3?text=Music+Thumbnail' // Placeholder
                 },
                 {
                     id: 6,
@@ -481,7 +486,8 @@
                     views: '75K',
                     comments: '600',
                     category: 'Portrait Videos',
-                    orientation: 'portrait'
+                    orientation: 'portrait',
+                    thumbnail: 'https://placehold.co/338x600/404040/a3a3a3?text=Portrait+Vlog' // Placeholder
                 },
                 {
                     id: 7,
@@ -492,7 +498,8 @@
                     views: '92K',
                     comments: '750',
                     category: 'Portrait Videos',
-                    orientation: 'portrait'
+                    orientation: 'portrait',
+                    thumbnail: 'https://placehold.co/338x600/404040/a3a3a3?text=Artistic+Portrait' // Placeholder
                 },
             ];
 
@@ -522,7 +529,7 @@
 
                     videoItem.innerHTML = `
                         <div class="video-thumbnail ${video.orientation === 'portrait' ? 'sm:w-40 sm:h-auto' : ''}">
-                            <img src="${video.orientation === 'portrait' ? '1cornxd.png' : 'cornxd.png'}" alt="Video Thumbnail" class="w-full h-full object-cover rounded-t-lg">
+                            <img src="${video.thumbnail}" alt="Video Thumbnail" class="w-full h-full object-cover rounded-t-lg" onerror="this.onerror=null;this.src='https://placehold.co/600x338/404040/a3a3a3?text=Image+Error';">
                             <div class="video-duration">${video.duration}</div>
                         </div>
                         <div class="video-info">
